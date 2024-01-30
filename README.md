@@ -1,44 +1,14 @@
 # React NodeJS Project
 
-- [Workflow: Website Deployment](#workflow-website-deployment)
-  - [Description](#description)
-  - [Jobs](#jobs)
-    - [1. Lint](#1-lint)
-    - [2. Test](#2-test)
-    - [3. Build](#3-build)
-    - [4. Deploy](#4-deploy)
-    - [5. Report](#5-report)
+This repository contains a React NodeJS project with GitHub Actions workflows for linting, testing, building, deploying, and reporting.
 
-- [Workflow: Matrix Demo](#workflow-matrix-demo)
-  - [Description](#description-1)
-  - [Jobs](#jobs-1)
-    - [1. Build](#1-build)
 
-- [Workflow: Reusable Deploy](#workflow-reusable-deploy)
-  - [Description](#description-2)
-  - [Jobs](#jobs-2)
-    - [1. Deploy](#1-deploy)
 
-- [Workflow: Using Reusable Workflow](#workflow-using-reusable-workflow)
-  - [Description](#description-3)
-  - [Jobs](#jobs-3)
-    - [1. Lint](#1-lint-1)
-    - [2. Test](#2-test-1)
-    - [3. Build](#3-build-1)
-    - [4. Deploy](#4-deploy-1)
-    - [5. Report](#5-report-1)
-
-- [Workflow: Continue Website Deployment](#workflow-continue-website-deployment)
-  - [Description](#description-4)
-  - [Jobs](#jobs-4)
-    - [1. Lint](#1-lint-2)
-    - [2. Test](#2-test-2)
-    - [3. Build](#3-build-2)
-    - [4. Deploy](#4-deploy-2)
-    - [5. Report](#5-report-2)
 
 ## Workflow: Website Deployment
-
+```ya
+[execution-flow.yml] (https://github.com/amosegonmwan/github-actions-executionflow/blob/main/.github/workflows/execution-flow.yml)
+```
 ### Description
 This workflow runs on every push to the main branch. It consists of several jobs to lint the code, run tests, build the website, deploy the application, and generate a report in case of failures.
 
@@ -87,6 +57,10 @@ This workflow runs on every push to the main branch. It consists of several jobs
   - Output information
   - Display information in case of failure
 
+
+
+
+
 ## Workflow: Matrix Demo
 
 ### Description
@@ -103,6 +77,10 @@ This workflow runs on push events and utilizes a matrix strategy to test the pro
   - Install dependencies
   - Build the project
 
+
+
+
+
 ## Workflow: Reusable Deploy
 
 ### Description
@@ -114,6 +92,11 @@ This workflow runs on workflow_call event and deploys the application by echoing
 - **Runs On:** Ubuntu Latest
 - **Steps:**
   - Output information (echo "Deploying & uploading")
+
+
+
+
+
 
 ## Workflow: Using Reusable Workflow
 
@@ -160,6 +143,10 @@ This workflow runs on push events to the main branch. It consists of jobs to lin
 - **Steps:**
   - Output information
   - Display information in case of failure
+
+
+
+
 
 ## Workflow: Continue Website Deployment
 
@@ -209,3 +196,4 @@ This workflow runs on push events to the main branch. It includes jobs to lint t
 - **Conditions:** Runs only on failure
 - **Steps:**
   - Output information
+  - Display information in case of failure
