@@ -1,222 +1,96 @@
-# React NodeJS Project
+name: Continue Website Deployment
 
-This repository contains a React NodeJS project with GitHub Actions workflows for linting, testing, building, deploying, and reporting.
+on:
+  push:
+    branches:
+      - main
 
+jobs:
 
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Cache dependencies
+        id: cache-lint
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: Lint code
+        run: npm run lint
 
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Cache dependencies
+        id: cache-lint
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: Test code
+        continue-on-error: true
+        id: run-tests
+        run: npm run test
+      - name: Upload test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: test.json
 
-## Workflow: Website Deployment
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Cache dependencies
+        id: cache-lint
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: Build website
+        id: build-website
+        run: npm run build
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-files
+          path: dist
 
-```ya
-execution-flow.yml
-```
-[execution-flow.yml](https://github.com/amosegonmwan/github-actions-executionflow/blob/main/.github/workflows/execution-flow.yml)
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-files
+      - name: Output contents
+        run: ls
+      - name: Deploy
+        run: echo "Deploying..."
 
-### Description
-This workflow runs on every push to the main branch. It consists of several jobs to lint the code, run tests, build the website, deploy the application, and generate a report in case of failures.
-
-### Jobs:
-
-#### 1. Lint
-- **Runs On:** Ubuntu Latest
-- **Steps:**
-  - Get code
-  - Cache dependencies
-  - Install dependencies if cache miss
-  - Lint code using npm run lint
-
-#### 2. Test
-- **Runs On:** Ubuntu Latest
-- **Steps:**
-  - Get code
-  - Cache dependencies
-  - Install dependencies if cache miss
-  - Run tests using npm run test
-  - Upload test report on failure
-
-#### 3. Build
-- **Runs On:** Ubuntu Latest
-- **Dependencies:** Depends on the Test job
-- **Steps:**
-  - Get code
-  - Cache dependencies
-  - Install dependencies if cache miss
-  - Build website using npm run build
-  - Upload artifacts (dist folder)
-
-#### 4. Deploy
-- **Runs On:** Ubuntu Latest
-- **Dependencies:** Depends on the Build job
-- **Steps:**
-  - Get build artifacts
-  - Output contents (list files)
-  - Deploy (echo "Deploying...")
-
-#### 5. Report
-- **Runs On:** Ubuntu Latest
-- **Dependencies:** Depends on the Lint and Deploy jobs
-- **Conditions:** Runs only on failure
-- **Steps:**
-  - Output information
-  - Display information in case of failure
-
-
-
-
-
-## Workflow: Matrix Demo
-
-```ya
-matrix.yml
-```
-[matrix.yml](https://github.com/amosegonmwan/github-actions-executionflow/blob/main/.github/workflows/matrix.yml)
-
-### Description
-This workflow runs on push events and utilizes a matrix strategy to test the project on different Node.js versions and operating systems. It includes steps to get the code, install Node.js, install dependencies, and build the project.
-
-### Jobs:
-
-#### 1. Build
-- **Continues On Error:** true
-- **Runs On:** Matrix (Node.js versions and operating systems)
-- **Steps:**
-  - Get code
-  - Install Node.js
-  - Install dependencies
-  - Build the project
-
-
-
-
-
-## Workflow: Reusable Deploy
-
-```ya
-matrix.yml
-```
-[matrix.yml](https://github.com/amosegonmwan/github-actions-executionflow/blob/main/.github/workflows/reusable.yml)
-
-### Description
-This workflow runs on workflow_call event and deploys the application by echoing "Deploying & uploading."
-
-### Jobs:
-
-#### 1. Deploy
-- **Runs On:** Ubuntu Latest
-- **Steps:**
-  - Output information (echo "Deploying & uploading")
-
-
-
-
-
-
-## Workflow: Using Reusable Workflow
-
-```ya
-use-reusable.yml
-```
-[use-reusable.yml](https://github.com/amosegonmwan/github-actions-executionflow/blob/main/.github/workflows/use-reusable.yml)
-
-### Description
-This workflow runs on push events to the main branch. It consists of jobs to lint the code, run tests, build the website, deploy the application using the reusable workflow, and generate a report in case of failures.
-
-### Jobs:
-
-#### 1. Lint
-- **Runs On:** Ubuntu Latest
-- **Steps:**
-  - Get code
-  - Cache dependencies
-  - Install dependencies if cache miss
-  - Lint code using npm run lint
-
-#### 2. Test
-- **Runs On:** Ubuntu Latest
-- **Steps:**
-  - Get code
-  - Cache dependencies
-  - Install dependencies if cache miss
-  - Run tests using npm run test
-  - Upload test report on failure
-
-#### 3. Build
-- **Runs On:** Ubuntu Latest
-- **Dependencies:** Depends on the Test job
-- **Steps:**
-  - Get code
-  - Cache dependencies
-  - Install dependencies if cache miss
-  - Build website using npm run build
-  - Upload artifacts (dist folder)
-
-#### 4. Deploy
-- **Depends On:** Build job
-- **Uses:** Reusable Deploy workflow
-
-#### 5. Report
-- **Runs On:** Ubuntu Latest
-- **Dependencies:** Depends on the Lint and Deploy jobs
-- **Conditions:** Runs only on failure
-- **Steps:**
-  - Output information
-  - Display information in case of failure
-
-
-
-
-
-## Workflow: Continue Website Deployment
-
-```ya
-continue.yml
-```
-[continue.yml](https://github.com/amosegonmwan/github-actions-executionflow/blob/main/.github/workflows/continue.yml)
-
-### Description
-This workflow runs on push events to the main branch. It includes jobs to lint the code, run tests, build the website, deploy the application, and generate a report in case of failures.
-
-### Jobs:
-
-#### 1. Lint
-- **Runs On:** Ubuntu Latest
-- **Steps:**
-  - Get code
-  - Cache dependencies
-  - Install dependencies if cache miss
-  - Lint code using npm run lint
-
-#### 2. Test
-- **Runs On:** Ubuntu Latest
-- **Steps:**
-  - Get code
-  - Cache dependencies
-  - Install dependencies if cache miss
-  - Run tests using npm run test
-  - Upload test report on failure
-
-#### 3. Build
-- **Runs On:** Ubuntu Latest
-- **Dependencies:** Depends on the Test job
-- **Steps:**
-  - Get code
-  - Cache dependencies
-  - Install dependencies if cache miss
-  - Build website using npm run build
-  - Upload artifacts (dist folder)
-
-#### 4. Deploy
-- **Runs On:** Ubuntu Latest
-- **Dependencies:** Depends on the Build job
-- **Steps:**
-  - Get build artifacts
-  - Output contents (list files)
-  - Deploy (echo "Deploying...")
-
-#### 5. Report
-- **Runs On:** Ubuntu Latest
-- **Dependencies:** Depends on the Lint and Deploy jobs
-- **Conditions:** Runs only on failure
-- **Steps:**
-  - Output information
-  - Display information in case of failure
+  report:
+    needs: [lint, deploy]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output information
+        run: |
+          echo "Something went wrong"
+          echo "${{ toJson(github) }}"
