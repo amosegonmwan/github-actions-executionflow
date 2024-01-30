@@ -4,7 +4,7 @@ This repository contains a React NodeJS project with GitHub Actions workflows fo
 
 ## Workflow: Website Deployment
 ```yaml
-execution-flow.yml
+.github/workflows/execution-flow.yml
 ```
 
 ### Description
@@ -55,6 +55,10 @@ This workflow runs on every push to the main branch. It consists of several jobs
   - Output information
   - Display information in case of failure
 
+
+
+
+
 ## Workflow: Matrix Demo
 ```yaml
 .github/workflows/matrix.yml
@@ -73,8 +77,15 @@ This workflow runs on push events and utilizes a matrix strategy to test the pro
   - Install dependencies
   - Build the project
 
-## Workflow: Reusable Deploy
 
+
+
+
+
+## Workflow: Reusable Deploy
+```yaml
+.github/workflows/use-reusable.yml
+```
 ### Description
 This workflow runs on workflow_call event and deploys the application by echoing "Deploying & uploading."
 
@@ -131,8 +142,13 @@ This workflow runs on push events to the main branch. It consists of jobs to lin
   - Output information
   - Display information in case of failure
 
-## Workflow: Continue Website Deployment
 
+
+
+## Workflow: Continue Website Deployment
+```yaml
+.github/workflows/continue.yml
+```
 ### Description
 This workflow runs on push events to the main branch. It includes jobs to lint the code, run tests, build the website, deploy the application, and generate a report in case of failures.
 
