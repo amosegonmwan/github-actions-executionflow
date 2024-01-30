@@ -12,7 +12,7 @@ This workflow runs on every push to the main branch. It consists of several jobs
 
 ### Jobs:
 
-#### 1. Lint
+####  Lint
 - **Runs On:** Ubuntu Latest
 - **Steps:**
   - Get code
