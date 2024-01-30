@@ -6,6 +6,7 @@ This repository contains a React NodeJS project with GitHub Actions workflows fo
 
 
 ## Workflow: Website Deployment
+
 ```ya
 execution-flow.yml
 ```
@@ -65,6 +66,11 @@ This workflow runs on every push to the main branch. It consists of several jobs
 
 ## Workflow: Matrix Demo
 
+```ya
+matrix.yml
+```
+[matrix.yml](https://github.com/amosegonmwan/github-actions-executionflow/blob/main/.github/workflows/matrix.yml)
+
 ### Description
 This workflow runs on push events and utilizes a matrix strategy to test the project on different Node.js versions and operating systems. It includes steps to get the code, install Node.js, install dependencies, and build the project.
 
@@ -85,6 +91,11 @@ This workflow runs on push events and utilizes a matrix strategy to test the pro
 
 ## Workflow: Reusable Deploy
 
+```ya
+matrix.yml
+```
+[matrix.yml](https://github.com/amosegonmwan/github-actions-executionflow/blob/main/.github/workflows/reusable.yml)
+
 ### Description
 This workflow runs on workflow_call event and deploys the application by echoing "Deploying & uploading."
 
@@ -101,6 +112,11 @@ This workflow runs on workflow_call event and deploys the application by echoing
 
 
 ## Workflow: Using Reusable Workflow
+
+```ya
+use-reusable.yml
+```
+[use-reusable.yml](https://github.com/amosegonmwan/github-actions-executionflow/blob/main/.github/workflows/use-reusable.yml)
 
 ### Description
 This workflow runs on push events to the main branch. It consists of jobs to lint the code, run tests, build the website, deploy the application using the reusable workflow, and generate a report in case of failures.
@@ -151,6 +167,11 @@ This workflow runs on push events to the main branch. It consists of jobs to lin
 
 
 ## Workflow: Continue Website Deployment
+
+```ya
+continue.yml
+```
+[continue.yml](https://github.com/amosegonmwan/github-actions-executionflow/blob/main/.github/workflows/continue.yml)
 
 ### Description
 This workflow runs on push events to the main branch. It includes jobs to lint the code, run tests, build the website, deploy the application, and generate a report in case of failures.
