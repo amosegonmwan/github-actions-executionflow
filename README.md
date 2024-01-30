@@ -7,7 +7,7 @@ This repository contains a React NodeJS project with GitHub Actions workflows fo
 
 ## Workflow: Website Deployment
 ```ya
-[execution-flow.yml](https://github.com/amosegonmwan/github-actions-executionflow/blob/main/.github/workflows/execution-flow.yml)
+execution-flow.yml
 ```
 [execution-flow.yml](https://github.com/amosegonmwan/github-actions-executionflow/blob/main/.github/workflows/execution-flow.yml)
 
