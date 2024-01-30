@@ -82,10 +82,7 @@ This workflow runs on push events and utilizes a matrix strategy to test the pro
 
 
 
-## <u> Workflow: Reusable Deploy </u>
-```yaml
-.github/workflows/use-reusable.yml
-```
+## <u> Workflow: Reusable Deploy </u> ```yaml .github/workflows/use-reusable.yml ```
 ### Description
 This workflow runs on workflow_call event and deploys the application by echoing "Deploying & uploading."
 
