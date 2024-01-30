@@ -12,7 +12,7 @@ This workflow runs on every push to the main branch. It consists of several jobs
 
 ### Jobs:
 
-####  Lint
+#### 1. Lint
 - **Runs On:** Ubuntu Latest
 - **Steps:**
   - Get code
@@ -56,7 +56,9 @@ This workflow runs on every push to the main branch. It consists of several jobs
   - Display information in case of failure
 
 ## Workflow: Matrix Demo
-
+```yaml
+.github/workflows/matrix.yml
+```
 ### Description
 This workflow runs on push events and utilizes a matrix strategy to test the project on different Node.js versions and operating systems. It includes steps to get the code, install Node.js, install dependencies, and build the project.
 
